@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use("/api/v1/restaurants", restaurants);
 app.use("*", (req, res) => {
-  res.status(400).json({ error: "Not Found" });
+	res.status(400).json({ error: "Not Found" });
 });
 
 export default app;
