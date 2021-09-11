@@ -13,8 +13,9 @@ const port = process.env.PORT || 8000;
 
 // Define connection with database
 MongoClient.connect(process.env.RESTREVIEWS_DB_URI, {
-	wtimeoutMS: 2500,
 	useNewUrlParser: true,
+	wtimeoutMS: 2500,
+	maxPoolSize: 50,
 })
 	.catch((err) => {
 		console.error(err.stack);
