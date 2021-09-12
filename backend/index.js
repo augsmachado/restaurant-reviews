@@ -3,6 +3,7 @@ import mongodb from "mongodb";
 import dotenv from "dotenv";
 
 import RestaurantsDAO from "./dao/restaurantsDAO.js";
+import ReviewsDAO from "./dao/reviewsDAO.js";
 
 // Define .env config
 dotenv.config();
@@ -23,6 +24,7 @@ MongoClient.connect(process.env.RESTREVIEWS_DB_URI, {
 	})
 	.then(async (client) => {
 		await RestaurantsDAO.injectDB(client);
+		await ReviewsDAO.injectDB(client);
 		app.listen(port, () => {
 			console.log(`Database is running on port: ${port}`);
 		});

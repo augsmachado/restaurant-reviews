@@ -1,5 +1,7 @@
-let restaurants;
+import mongodb from "mongodb";
+const ObjectId = mongodb.ObjectId;
 
+let restaurants;
 export default class RestaurantsDAO {
 	// Establish a connection handle in restaurantsDAO
 	static async injectDB(conn) {
@@ -47,7 +49,7 @@ export default class RestaurantsDAO {
 			.skip(restaurantsPerPage * page);
 		try {
 			const restaurantsList = await displayCursor.toArray();
-			const totalNumRestaurants = 
+			const totalNumRestaurants =
 				page === 0 ? await restaurants.countDocuments(query) : 0;
 			return { restaurantsList, totalNumRestaurants };
 		} catch (err) {
@@ -55,6 +57,65 @@ export default class RestaurantsDAO {
 				`Unable to convert cursor to array or problem counting documents, ${err}`
 			);
 			return { restaurantsList: [], totalNumRestaurants: 0 };
+		}
+	}
+
+	static async getRestaurantById(id) {
+		try {
+			const pipeline = [
+				{
+					$match: {
+						_id: new ObjectId(id),
+					},
+				},
+				{
+					$lookup: {
+						from: "reviews",
+						let: {
+							id: "$_id",
+						},
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$eq: ["$restaurant_id", "$$id"],
+									},
+								},
+							},
+							{
+								$sort: {
+									date: -1,
+								},
+							},
+						],
+						as: "reviews",
+					},
+				},
+				{
+					$addFields: {
+						reviews: "$reviews",
+					},
+				},
+			];
+			return await restaurants.aggregate(pipeline).next();
+		} catch (err) {
+			console.error(
+				`Something went wrong in the getRestaurantById: ${err}`
+			);
+
+			throw err;
+		}
+	}
+
+	static async getCuisines() {
+		let cuisines = [];
+
+		try {
+			cuisines = await restaurants.distinct("cuisine");
+			return cuisines;
+		} catch (err) {
+			console.log(`Unable to get cuisines, ${err}`);
+			return cuisines;
 		}
 	}
 }
