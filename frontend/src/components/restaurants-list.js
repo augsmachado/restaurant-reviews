@@ -82,10 +82,11 @@ const RestaurantsList = (props) => {
 		}
 	};
 
+  // Forms need to be rendered using better positioning and another layout, when buttons and forms are in same orientation
 	return (
 		<div>
-			<div className="row pb-1">
-				<div className="input-group col-lg-4">
+			<div className="row g-3">
+				<div className="col-lg-4">
 					<input
 						type="text"
 						className="form-control"
@@ -93,7 +94,7 @@ const RestaurantsList = (props) => {
 						value={searchName}
 						onChange={onChangeSearchName}
 					/>
-					<div className="input-goup-append">
+					<div className="input-group-append">
 						<button
 							className="btn btn-outline-secondary"
 							type="button"
@@ -103,7 +104,7 @@ const RestaurantsList = (props) => {
 						</button>
 					</div>
 				</div>
-				<div className="input-group col-lg-4">
+				<div className="col-lg-4">
 					<input
 						type="text"
 						className="form-control"
@@ -111,18 +112,16 @@ const RestaurantsList = (props) => {
 						value={searchZip}
 						onChange={onChangeSearchZip}
 					/>
-					<div className="input-goup-append">
-						<button
-							className="btn btn-outline-secondary"
-							type="button"
-							onClick={findByZip}
-						>
-							Search
-						</button>
-					</div>
+					<button
+						className="btn btn-outline-secondary"
+						type="button"
+						onClick={findByZip}
+					>
+						Search
+					</button>
 				</div>
-				<div className="input-group col-lg-4">
-					<select onChange={onChangeSearchCuisine}>
+				<div className="col-lg-4">
+					<select className="form-select" onChange={onChangeSearchCuisine}>
 						{cuisines.map((cuisine) => {
 							return (
 								<option value={cuisine} key={cuisine}>
@@ -131,15 +130,13 @@ const RestaurantsList = (props) => {
 							);
 						})}
 					</select>
-					<div className="input-group-append">
-						<button
-							type="button"
-							className="btn btn-outline-secondary"
-							onClick={findByCuisine}
-						>
-							Search
-						</button>
-					</div>
+					<button
+						type="button"
+						className="btn btn-outline-secondary"
+						onClick={findByCuisine}
+					>
+						Search
+					</button>
 				</div>
 			</div>
 
