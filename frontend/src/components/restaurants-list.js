@@ -82,9 +82,10 @@ const RestaurantsList = (props) => {
 		}
 	};
 
-  // Forms need to be rendered using better positioning and another layout, when buttons and forms are in same orientation
+  // TODO: Forms need to be rendered using better positioning and another layout, when buttons and forms are in same orientation
+  // TODO: add pagination support
 	return (
-		<div>
+		<div className="container">
 			<div className="row g-3">
 				<div className="col-lg-4">
 					<input
