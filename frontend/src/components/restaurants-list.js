@@ -113,13 +113,15 @@ const RestaurantsList = (props) => {
 						value={searchZip}
 						onChange={onChangeSearchZip}
 					/>
-					<button
-						className="btn btn-outline-secondary"
-						type="button"
-						onClick={findByZip}
-					>
-						Search
-					</button>
+					<div className="input-group-append">
+						<button
+							className="btn btn-outline-secondary"
+							type="button"
+							onClick={findByZip}
+						>
+							Search
+						</button>
+					</div>
 				</div>
 				<div className="col-lg-4">
 					<select className="form-select" onChange={onChangeSearchCuisine}>
